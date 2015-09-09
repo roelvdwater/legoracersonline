@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace LEGORacersAPI
@@ -26,22 +27,31 @@ namespace LEGORacersAPI
         /// <returns>Returns a GameClient instance.</returns>
         public static GameClient GetGameClient(Process process, bool initialize)
         {
-            string md5hash = Toolbox.GetMD5Hash(process.MainModule.FileName);
             GameClient gameClient = null;
 
-            switch (md5hash)
+            try
             {
-                case "80c9577841476a26ed76749b8e4b4a9f": case "8c4bb866a9b5d313584831834aec8158":
-                    gameClient = new Client_1999NoDRM(process, initialize);
-                    break;
-                case "a0007cfe64097651e5505fba15ab5cc1":
-                    gameClient = new Client_1999NoDRM(process, initialize);
-                    break;
-                case "325cbbedc9d745107bca4a8654fce4db":
-                    gameClient = new Client_2001(process, initialize);
-                    break;
-            }
+                string md5hash = Toolbox.GetMD5Hash(process.MainModule.FileName);
 
+                switch (md5hash)
+                {
+                    case "80c9577841476a26ed76749b8e4b4a9f":
+                    case "8c4bb866a9b5d313584831834aec8158":
+                        gameClient = new Client_1999NoDRM(process, initialize);
+                        break;
+                    case "a0007cfe64097651e5505fba15ab5cc1":
+                        gameClient = new Client_1999NoDRM(process, initialize);
+                        break;
+                    case "325cbbedc9d745107bca4a8654fce4db":
+                        gameClient = new Client_2001(process, initialize);
+                        break;
+                }
+            }
+            catch (Win32Exception e)
+            {
+                // Access Denied
+            }
+            
             return gameClient;
         }
 
