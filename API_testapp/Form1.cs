@@ -47,9 +47,16 @@ namespace API_testapp
                 game = clients[0];
                 statuslabel.Text = "attached";
                 enablestuff(true);
+
+                game.Initialized += Game_Initialized;
             }
             else
                 statuslabel.Text = "failed to attach";
+        }
+
+        private void Game_Initialized(InitializedType type)
+        {
+            Console.WriteLine(type.ToString());
         }
 
         private void enablestuff(bool value)

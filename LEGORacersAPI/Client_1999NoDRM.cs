@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading;
 
 namespace LEGORacersAPI
 {
@@ -73,7 +74,9 @@ namespace LEGORacersAPI
 
             if (Settings.AutoInitialize && initialize)
             {
-                //Initialize();
+                Thread thread = new Thread(Initialize);
+
+                thread.Start();
             }
         }
     }

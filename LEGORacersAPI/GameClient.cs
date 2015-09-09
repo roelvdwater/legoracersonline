@@ -297,7 +297,7 @@ namespace LEGORacersAPI
         /// <summary>
         /// Initializes the in-game objects so they can be managed using the API.
         /// </summary>
-        private void Initialize()
+        protected void Initialize()
         {
             try
             {
